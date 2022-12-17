@@ -16,7 +16,6 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-
             <TextBox Name ="SearchTextBox"  FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" Height="30" Margin="151,0,641,0" TextChanged="TextBoxChanged"/>
             <Button Name ="SearchButton" Content="Search" Opacity="100" Click="OnSearchButtonClicked" Margin="620,26,518,25" RenderTransformOrigin="0.474,-4.22"/>
 
@@ -24,9 +23,6 @@
 
             </Grid>
         </Grid>
-
-
-
     </Border>
 
 

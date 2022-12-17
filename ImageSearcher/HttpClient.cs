@@ -9,21 +9,46 @@ using System.Xml.Serialization;
 
 namespace ImageSearcher
 {
-    internal class HttpRequest 
+    public class HttpRequestService 
     {
         private readonly HttpClient client;
-        HttpRequest()
+        private static object lockObj = new object();
+
+        private static HttpRequestService httpRequestSrv;
+
+        private HttpRequestService()
         {
             client = new HttpClient();
         }
 
+        public static HttpRequestService GetInstance()
+        { 
+            if(httpRequestSrv == null)
+            {
+                lock (lockObj)
+                {
+                    httpRequestSrv = new HttpRequestService();
+                }
+            }
+            return httpRequestSrv;
+            
+        }
+
         public async Task<string> GetHttpResponse(string url)
         {
+            
             var response = string.Empty;
-            HttpResponseMessage result = await client.GetAsync(url);
-            if (result.IsSuccessStatusCode)
+            try
             {
-                response = await result.Content.ReadAsStringAsync();
+                HttpResponseMessage result = await client.GetAsync(url);
+                if (result.IsSuccessStatusCode)
+                {
+                    response = await result.Content.ReadAsStringAsync();
+                }
+            } 
+            catch (Exception ex)
+            {
+                response = string.Empty;
             }
             return response;
         }
