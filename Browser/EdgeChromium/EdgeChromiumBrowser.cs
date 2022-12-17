@@ -19,9 +19,6 @@ namespace Browser
         public EdgeChromiumBrowser()
         {
             edgeWebView = new WebView2();
-            edgeWebView.CoreWebView2InitializationCompleted += OnInitializationCompleted;
-            edgeWebView.NavigationStarting += OnNavigationStarting;
-            edgeWebView.NavigationCompleted += OnNavigationCompleted;
 
             edgeWebView.Loaded += async (sender, e) =>
             {
@@ -65,22 +62,6 @@ namespace Browser
         }
 
         public UIElement GetUIElement => (UIElement)this.edgeWebView;
-
-        private void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            Console.WriteLine("OnNavigationCompleted");
-        }
-
-        private void OnNavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-            Console.WriteLine("OnNavigationStarting");
-        }
-
-        private void OnInitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
-        {
-            Console.WriteLine("Initialization completed");
-        }
-
 
         public void InvokeScriptAsync(string methodName, params object[] args)
         {

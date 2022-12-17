@@ -4,6 +4,7 @@ using log4net;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,9 +13,11 @@ namespace PhotoViewer
 {
     internal class SearchButtonClickedEventArgs : EventArgs
     {
-        public ArrayList Results;
+        public ArrayList imagesArray;
 
         public bool IsRequestSuccessful;
+
+        public int NoOfPages;
     }
 
     internal class SearchController 
@@ -29,13 +32,13 @@ namespace PhotoViewer
 
         private EventHandler<SearchButtonClickedEventArgs> OnImagesResultsReceived;
 
-        private ConcurrentStack<string> searchStack;
+        private ConcurrentStack<Tuple<string, int>> searchStack;
 
         public static EventHandler OnStackEmpty;
 
         public static EventHandler OnStackAdded;
 
-        public string currentSearch;
+        public static EventHandler OnMaxPageReached;
 
         public int GetStackCount()
         {
@@ -47,33 +50,60 @@ namespace PhotoViewer
             this.browser = browser;
             this.imgSearcher = imgSearcher;
             this.callsToJs = callsToJs;
-            searchStack = new ConcurrentStack<string>();
-            currentSearch = string.Empty;
-
+            searchStack = new ConcurrentStack<Tuple<string, int>>();
         }
 
-        public void QueryImages(string searchText)
+        public void QueryImages(string searchText, int pageNo = 1, bool newSearch = true)
         {
             Log.Info($"Search Query - {searchText}");
-            currentSearch = searchText;
             callsToJs.ShowLoading();
+                
+            imgSearcher.SetPage(pageNo);
             
-            searchStack.Push(searchText);
-            
-            if(searchStack.Count > 1) {
+            if(newSearch) {
+                searchStack.Push(new Tuple<string, int>(searchText, pageNo));
+            }
+
+            if (searchStack.Count > 1) {
                 OnStackAdded?.Invoke(this, null);
             }
 
             OnImagesResultsReceived += SearchResultsReceivedHandler;
+
             Task.Run(() =>
             {
-                bool isRequestSuccess;
-                var result = imgSearcher.GetImagesUrl(searchText, out isRequestSuccess);
+                var result = imgSearcher.GetImagesUrl(searchText);
                 var args = new SearchButtonClickedEventArgs();
-                args.IsRequestSuccessful = isRequestSuccess;
-                args.Results = result;
+                args.IsRequestSuccessful = result.IsRequestSuccessful;
+                args.imagesArray = result.imagesArray;
+                args.NoOfPages = result.ResponsePages;
                 OnImagesResultsReceived.Invoke(this, args);
             });
+        }
+
+        public string BackButtonHandler()
+        {
+            Tuple<string, int> deleteTuple, currentTuple;
+            searchStack.TryPop(out deleteTuple);
+            searchStack.TryPeek(out currentTuple);
+
+            if (!string.IsNullOrEmpty(currentTuple.Item1))
+            {
+                QueryImages(currentTuple.Item1, currentTuple.Item2, newSearch:false);
+                if(searchStack.Count <= 1)
+                {
+                    OnStackEmpty.Invoke(this, null);
+                }
+            }
+            return currentTuple.Item1;
+        }
+
+
+        public void NextPageHandler()
+        {
+            Tuple<string, int> tuple;
+            searchStack.TryPeek(out tuple);            
+            QueryImages(tuple.Item1,tuple.Item2+1);
         }
 
         private void SearchResultsReceivedHandler(object sender, SearchButtonClickedEventArgs args)
@@ -81,9 +111,9 @@ namespace PhotoViewer
             OnImagesResultsReceived -= SearchResultsReceivedHandler;
             if (args.IsRequestSuccessful)
             {
-                if(args.Results.Count > 0) 
+                if (args.imagesArray.Count > 0)
                 {
-                    callsToJs.LoadImages(args.Results);
+                    callsToJs.LoadImages(args.imagesArray);
                 }
                 else
                 {
@@ -96,24 +126,5 @@ namespace PhotoViewer
             }
         }
 
-
-        public string BackButtonHandler()
-        {
-            var searchString = string.Empty;
-            searchStack.TryPop(out searchString);
-            if(currentSearch == searchString)
-            {
-                searchStack.TryPop(out searchString);
-            }
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                QueryImages(searchString);
-                if(searchStack.Count <= 1)
-                {
-                    OnStackEmpty.Invoke(this, null);
-                }
-            }
-            return searchString;
-        }
     }
 }

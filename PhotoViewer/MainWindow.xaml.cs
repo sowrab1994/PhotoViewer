@@ -63,8 +63,10 @@ namespace PhotoViewer
             SearchButton.IsEnabled = false;
             SearchButton.Foreground = new SolidColorBrush(Colors.Black); 
             BackButton.Visibility = Visibility.Collapsed;
+            
             SearchController.OnStackAdded += StackAddedEventHandler;
             SearchController.OnStackEmpty += StackEmptyEventHanlder;
+
             Log.Info("MainWindow Loaded");
         }
 
@@ -98,6 +100,20 @@ namespace PhotoViewer
             if (!string.IsNullOrWhiteSpace(str))
             {
                 SearchTextBox.Text = str;
+            }
+        }
+
+        private void OnNextButtonClicked(object sender, RoutedEventArgs e)
+        {
+            controller.NextPageHandler();
+        }
+
+        private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Return)
+            {
+                string searchText = SearchTextBox.Text;
+                controller.QueryImages(searchText);
             }
         }
     }

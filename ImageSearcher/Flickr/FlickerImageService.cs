@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ImageSearcher
 {
@@ -11,14 +12,12 @@ namespace ImageSearcher
         private string apiKey = "c098ab4dc93e9a203a007ad613d1c414";
         private string urlPrefix = "https://www.flickr.com/services/rest/?";
         private string methodName = "flickr.photos.search";
-        private string url;
         private Dictionary<string, string> urlQueryDict  = new Dictionary<string, string>();
         HttpRequestService httpRequest;
         FlickerResponseProcessor processor;
 
         public FlickerImageService() 
         {
-            url = url + urlPrefix + "method" + "=" + methodName;
             httpRequest = HttpRequestService.GetInstance();
             processor = new FlickerResponseProcessor();
         }
@@ -28,7 +27,7 @@ namespace ImageSearcher
             return "&" + key + "=" + val;
         }
 
-        private void FormUrl()
+        private void FormUrl(ref string url)
         {
             foreach (var ele in urlQueryDict)
             {
@@ -37,13 +36,16 @@ namespace ImageSearcher
         }
 
        
-        public ArrayList GetImagesUrl(string text, out bool IsRequestSuccess)
+        public SearchResponse GetImagesUrl(string text)
         {
+            string url = urlPrefix + "method" + "=" + methodName;
+            SearchResponse searchResponse = new SearchResponse();
             SetApiKey();
             SetText(text);
-            FormUrl();
+            FormUrl(ref url);
             Task<string> tsk = null;
             bool isRequestSuccessful = true;
+            MessageBox.Show(url);
             Task.Run(() =>
             {
                 tsk = httpRequest.GetHttpResponse(url);  
@@ -65,15 +67,17 @@ namespace ImageSearcher
                 try
                 {
                     processor.SerializeResponse(responseString);
-                    responseArray = processor.GetImagesUrl();
+                    searchResponse.imagesArray = processor.GetImagesUrl();
+                    searchResponse.ResponsePages = processor.GetResponsePages();
                 }
                 catch
                 {
                     //Log here
                 }
             }
-            IsRequestSuccess = isRequestSuccessful;
-            return responseArray;
+            searchResponse.IsRequestSuccessful = isRequestSuccessful; 
+
+            return searchResponse;
         }
 
         private void SetText(string text)
