@@ -10,6 +10,11 @@ namespace ProductConfig
     {
         public static string webPageUrl = "https://workspace.test/index.html";
 
+        #region JSFunctions
+        public static string LoadImages = "LoadImages";
+        public static string LoadNoInternet = "LoadNoInternet";
+        public static string LoadHomePage = "LoadHomePage";
+        #endregion
 
     }
 }

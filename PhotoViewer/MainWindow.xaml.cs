@@ -1,10 +1,15 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
+using System.Windows;
 using Browser;
 using ImageSearcher;
 using ProductConfig;
 
 namespace PhotoViewer
 {
+
+   
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -14,12 +19,16 @@ namespace PhotoViewer
 
         IImageSearcher imgSearcher;
 
+        SearchController controller;
+
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
             browser = new BrowserFactory().GetBrowser();
             imgSearcher = new ImageServiceFactory().GetImageService();
+            controller = new SearchController(browser, imgSearcher);
             WebPageLoader.Children.Add(browser.GetUIElement);
             browser.LoadWebPage(Config.webPageUrl);
 
@@ -31,17 +40,18 @@ namespace PhotoViewer
         }
 
 
-
         private void TextBoxChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-
-            SearchButton.IsEnabled = SearchTextBox.Text.Length > 0;
-            
+            SearchButton.IsEnabled = SearchTextBox.Text.Length > 0;   
         }
 
         private void OnSearchButtonClicked(object sender, RoutedEventArgs e)
         {
-            imgSearcher.GetImagesUrl(SearchTextBox.Text);
+            string searchText = SearchTextBox.Text;
+            controller.QueryImages(searchText);
         }
+
+
+      
     }
 }
