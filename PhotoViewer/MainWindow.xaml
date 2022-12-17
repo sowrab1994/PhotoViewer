@@ -16,29 +16,24 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBox Name ="SearchTextBox"  FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" Height="30" Margin="151,0,641,0" TextChanged="TextBoxChanged"/>
-            <Button Name ="SearchButton" Content="Search" Opacity="100" Click="OnSearchButtonClicked" Margin="620,26,518,25" RenderTransformOrigin="0.474,-4.22"/>
-
+            <TextBox Name ="SearchTextBox"  
+                     FontSize="20" 
+                     TextWrapping="Wrap" 
+                     VerticalContentAlignment="Center" 
+                     Height="30" 
+                     Margin="151,0,641,0" 
+                     TextChanged="TextBoxChanged"
+                     BorderThickness="0"
+                     Background="Gray"
+                     Foreground="White"
+                        
+                    />
+            <Button Name ="SearchButton" Content="Search" Click="OnSearchButtonClicked" Margin="616,24,516,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White"/>
+            <Button x:Name ="BackButton" Content="Back"  Margin="61,24,1074,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White" Click="OnBackButtonClicked"/>
             <Grid x:Name="WebPageLoader" Grid.Row="2">
 
             </Grid>
         </Grid>
     </Border>
 
-
-
-    <!-- 212529
-    <Grid  Margin="0,0,0,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="459*"/>
-            <ColumnDefinition Width="670*"/>
-        </Grid.ColumnDefinitions>
-        <TextBox Name ="SearchTextBox" TextWrapping="Wrap" Margin="195,10,508,610" Grid.ColumnSpan="2" TextChanged="TextBoxChanged"/>
-        <Button Name ="SearchButton" Content="Search" Margin="190,18,401,610" Grid.Column="1" Click="OnSearchButtonClicked"/>
-        <Grid x:Name="WebPageLoader"  Margin="0,75,0,0" Grid.ColumnSpan="2">
-
-        </Grid>
-    </Grid>
-
-    -->
 </Window>

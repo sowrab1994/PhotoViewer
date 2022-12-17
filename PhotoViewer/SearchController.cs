@@ -2,6 +2,7 @@
 using ImageSearcher;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,7 +15,7 @@ namespace PhotoViewer
         public bool IsRequestSuccessful;
     }
 
-    internal class SearchController
+    internal class SearchController 
     {
         IBrowser browser;
 
@@ -24,19 +25,40 @@ namespace PhotoViewer
 
         private EventHandler<SearchButtonClickedEventArgs> OnImagesResultsReceived;
 
-        private string CurrentSearchItem;
+        private ConcurrentStack<string> searchStack;
 
-        public SearchController(IBrowser browser, IImageSearcher imgSearcher) 
+        public static EventHandler OnStackEmpty;
+
+        public static EventHandler OnStackAdded;
+
+        public string currentSearch;
+
+        public int GetStackCount()
+        {
+            return searchStack.Count;
+        }
+
+        public SearchController(IBrowser browser, IImageSearcher imgSearcher, ICallsToJs callsToJs) 
         { 
             this.browser = browser;
             this.imgSearcher = imgSearcher;
-            callsToJs = new CallsToJs(this.browser);
+            this.callsToJs = callsToJs;
+            searchStack = new ConcurrentStack<string>();
+            currentSearch = string.Empty;
+
         }
 
         public void QueryImages(string searchText)
         {
+            currentSearch = searchText;
             callsToJs.ShowLoading();
-            CurrentSearchItem = searchText;
+            
+            searchStack.Push(searchText);
+            
+            if(searchStack.Count > 1) {
+                OnStackAdded?.Invoke(this, null);
+            }
+
             OnImagesResultsReceived += SearchResultsReceivedHandler;
             Task.Run(() =>
             {
@@ -67,6 +89,26 @@ namespace PhotoViewer
             {
                 callsToJs.ShowNoInternet();
             }
+        }
+
+
+        public string BackButtonHandler()
+        {
+            var searchString = string.Empty;
+            searchStack.TryPop(out searchString);
+            if(currentSearch == searchString)
+            {
+                searchStack.TryPop(out searchString);
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                QueryImages(searchString);
+                if(searchStack.Count <= 1)
+                {
+                    OnStackEmpty.Invoke(this, null);
+                }
+            }
+            return searchString;
         }
     }
 }

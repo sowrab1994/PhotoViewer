@@ -29,13 +29,9 @@ namespace ProductConfig
                 for (int i = 0; i < args.Length; i++)
                 {
                     var parameter = args[i];
-                    if (parameter == null)
+                    if (IsNumeric(parameter))
                     {
-                        stringBuilder.Append("null");
-                    }
-                    else if (IsNumeric(parameter))
-                    {
-                        stringBuilder.Append(Convert.ToString(args[i], CultureInfo.InvariantCulture));
+                        stringBuilder.Append(Convert.ToString(args[i]));
                     }
                     else if (parameter is bool)
                     {
@@ -49,7 +45,6 @@ namespace ProductConfig
                     }
                     stringBuilder.Append(", ");
                 }
-                //Remove the trailing comma
                 stringBuilder.Remove(stringBuilder.Length - 2, 2);
             }
             stringBuilder.Append(");");
