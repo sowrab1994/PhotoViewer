@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Browser;
 using ImageSearcher;
+using log4net;
 using ProductConfig;
 
 namespace PhotoViewer
@@ -20,6 +23,8 @@ namespace PhotoViewer
 
         IImageSearcher imgSearcher;
 
+        private static ILog Log;
+
         SearchController controller;
 
         ICallsToJs callToJs;
@@ -27,6 +32,7 @@ namespace PhotoViewer
         public MainWindow()
         {
             InitializeComponent();
+            IntializeLogging();
             Loaded += MainWindow_Loaded;
             browser = new BrowserFactory().GetBrowser();
             imgSearcher = new ImageServiceFactory().GetImageService();
@@ -36,6 +42,22 @@ namespace PhotoViewer
             browser.LoadWebPage(Config.webPageUrl);
         }
 
+        private void IntializeLogging()
+        {
+            try
+            {
+                var logFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "PhotoViewer", "Logs");
+                if (!Directory.Exists(logFolderPath)) Directory.CreateDirectory(logFolderPath);
+                var logFilePath = Path.Combine(logFolderPath, "Applicationlog.log");
+                GlobalContext.Properties["LogFilePath"] = logFilePath;
+                log4net.Config.XmlConfigurator.Configure();
+                Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+                Log.Info("Logging initialized successfully.");
+            }
+            catch { }
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             SearchButton.IsEnabled = false;
@@ -43,6 +65,7 @@ namespace PhotoViewer
             BackButton.Visibility = Visibility.Collapsed;
             SearchController.OnStackAdded += StackAddedEventHandler;
             SearchController.OnStackEmpty += StackEmptyEventHanlder;
+            Log.Info("MainWindow Loaded");
         }
 
         private void StackEmptyEventHanlder(object sender, EventArgs e)

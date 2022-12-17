@@ -69,10 +69,6 @@
       <Project>{29b615fd-b794-4245-94d0-0da241b5d94f}</Project>
       <Name>Config</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logger\Logger.csproj">
-      <Project>{507377bf-0bf3-46ab-8676-e9175112ecfb}</Project>
-      <Name>Logger</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1462.37\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1462.37\build\Microsoft.Web.WebView2.targets')" />

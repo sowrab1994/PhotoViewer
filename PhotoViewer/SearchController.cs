@@ -1,8 +1,10 @@
 ﻿using Browser;
 using ImageSearcher;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -22,6 +24,8 @@ namespace PhotoViewer
         IImageSearcher imgSearcher;
 
         ICallsToJs callsToJs;
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private EventHandler<SearchButtonClickedEventArgs> OnImagesResultsReceived;
 
@@ -50,6 +54,7 @@ namespace PhotoViewer
 
         public void QueryImages(string searchText)
         {
+            Log.Info($"Search Query - {searchText}");
             currentSearch = searchText;
             callsToJs.ShowLoading();
             

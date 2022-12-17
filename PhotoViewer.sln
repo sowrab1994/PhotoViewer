@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoViewer", "PhotoViewer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearcher", "ImageSearcher\ImageSearcher.csproj", "{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{507377BF-0BF3-46AB-8676-E9175112ECFB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{5F09ACCF-407A-440A-A1C7-409DAFF8E347}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestImageSearcher", "TestImageSearcher\TestImageSearcher.csproj", "{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}"
@@ -31,10 +29,6 @@ Global
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{507377BF-0BF3-46AB-8676-E9175112ECFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{507377BF-0BF3-46AB-8676-E9175112ECFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{507377BF-0BF3-46AB-8676-E9175112ECFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{507377BF-0BF3-46AB-8676-E9175112ECFB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
