@@ -19,6 +19,7 @@ namespace ImageSearcher
         private HttpRequestService()
         {
             client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(2);
         }
 
         public static HttpRequestService GetInstance()
@@ -36,7 +37,6 @@ namespace ImageSearcher
 
         public async Task<string> GetHttpResponse(string url)
         {
-            
             var response = string.Empty;
             try
             {
@@ -45,10 +45,11 @@ namespace ImageSearcher
                 {
                     response = await result.Content.ReadAsStringAsync();
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 response = string.Empty;
+                throw ex;
             }
             return response;
         }

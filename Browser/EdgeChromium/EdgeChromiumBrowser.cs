@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
+using ProductConfig;
 
 namespace Browser
 {
@@ -82,11 +80,15 @@ namespace Browser
         {
             Console.WriteLine("Initialization completed");
         }
-        
+
 
         public void InvokeScriptAsync(string methodName, params object[] args)
         {
-            throw new NotImplementedException();
+            string test = Config.BuildJavacriptFunction(methodName, args);
+            this.edgeWebView.Dispatcher.Invoke(() =>
+            {
+                edgeWebView.ExecuteScriptAsync(test);
+            });
         }
     }
 }

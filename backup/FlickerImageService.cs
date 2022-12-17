@@ -36,44 +36,30 @@ namespace ImageSearcher
             }
         }
 
-       
-        public ArrayList GetImagesUrl(string text, out bool IsRequestSuccess)
+
+        public async Task<ArrayList> GetImagesUrl(string text)
         {
             SetApiKey();
             SetText(text);
             FormUrl();
-            Task<string> tsk = null;
-            bool isRequestSuccessful = true;
-            Task.Run(() =>
-            {
-                tsk = httpRequest.GetHttpResponse(url);  
-            }).Wait();
-            var responseArray = new ArrayList();
-            string responseString = string.Empty;
-            try
-            {
-                responseString = tsk.Result.ToString();
-            }
-            catch
-            {
-                isRequestSuccessful = false;
-            }
 
-
-            if (!String.IsNullOrEmpty(responseString))
+            Task<ArrayList> task = Task.Run(() =>
             {
-                try
-                {
-                    processor.SerializeResponse(responseString);
-                    responseArray = processor.GetImagesUrl();
-                }
-                catch
-                {
-                    //Log here
-                }
-            }
-            IsRequestSuccess = isRequestSuccessful;
-            return responseArray;
+                ArrayList imagesList = new ArrayList();
+                httpRequest.GetHttpResponse(url)
+                    .ContinueWith(t =>
+                    {
+                        string responseString = t.Result.ToString();
+                        if (!String.IsNullOrEmpty(responseString))
+                        {
+                            processor.SerializeResponse(responseString);
+                            imagesList = processor.GetImagesUrl();
+                        }
+
+                    });
+                return imagesList;
+            });
+            return await Task.FromResult(task.Result);
         }
 
         private void SetText(string text)

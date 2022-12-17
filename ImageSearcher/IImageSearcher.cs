@@ -7,6 +7,6 @@ namespace ImageSearcher
     {
         void SetApiKey(string key = "");
         void SetPage(int page);
-        ArrayList GetImagesUrl(string text);
+        ArrayList GetImagesUrl(string text, out bool IsRequestSuccess);
     }
 }
