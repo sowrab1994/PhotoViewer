@@ -38,8 +38,6 @@ namespace PhotoViewer
 
         public static EventHandler OnStackAdded;
 
-        public static EventHandler OnMaxPageReached;
-
         public int GetStackCount()
         {
             return searchStack.Count;
@@ -85,9 +83,8 @@ namespace PhotoViewer
         {
             Tuple<string, int> deleteTuple, currentTuple;
             searchStack.TryPop(out deleteTuple);
-            searchStack.TryPeek(out currentTuple);
 
-            if (!string.IsNullOrEmpty(currentTuple.Item1))
+            if (searchStack.TryPeek(out currentTuple))
             {
                 QueryImages(currentTuple.Item1, currentTuple.Item2, newSearch:false);
                 if(searchStack.Count <= 1)
@@ -102,8 +99,10 @@ namespace PhotoViewer
         public void NextPageHandler()
         {
             Tuple<string, int> tuple;
-            searchStack.TryPeek(out tuple);            
-            QueryImages(tuple.Item1,tuple.Item2+1);
+            if (searchStack.TryPeek(out tuple))
+            {
+                QueryImages(tuple.Item1, tuple.Item2 + 1);
+            }
         }
 
         private void SearchResultsReceivedHandler(object sender, SearchButtonClickedEventArgs args)
