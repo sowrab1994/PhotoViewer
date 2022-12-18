@@ -8,6 +8,6 @@ namespace ImageSearcher
 {
     internal interface IImageServiceFactory
     {
-        IImageSearcher GetImageService();
+        IImageSearchService GetImageService();
     }
 }

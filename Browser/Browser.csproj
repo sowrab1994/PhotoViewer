@@ -56,9 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserFactory.cs" />
+    <Compile Include="CallsToJs.cs" />
     <Compile Include="EdgeChromium\EdgeChromiumBrowser.cs" />
     <Compile Include="IBrowser.cs" />
     <Compile Include="IBrowserFactory.cs" />
+    <Compile Include="ICallsToJs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

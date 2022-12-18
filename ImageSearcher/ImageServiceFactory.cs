@@ -4,25 +4,22 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using ProductConfig;
 
 namespace ImageSearcher
 {
     public class ImageServiceFactory : IImageServiceFactory
     {
-        enum ImageServiceType
+        
+        public IImageSearchService GetImageService()
         {
-            FlickerService
-        }
-
-        public IImageSearcher GetImageService()
-        {
-            var service = ImageServiceType.FlickerService;
-            switch(service)
+            var service = Config.ReadRegValueString("Software\\PhotoViewer", "serviceName");
+            switch(service.ToLower())
             {
-                case ImageServiceType.FlickerService:
+                case "flickr":
                     return new FlickerImageService();
                 default:
-                    return null;
+                    return new FlickerImageService();
             }
         }
     }

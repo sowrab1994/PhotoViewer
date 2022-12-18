@@ -21,11 +21,11 @@ namespace PhotoViewer
     {
         IBrowser browser;
 
-        IImageSearcher imgSearcher;
+        IImageSearchService imgSearcher;
 
         private static ILog Log;
 
-        SearchController controller;
+        ISearchController controller;
 
         ICallsToJs callToJs;
 
@@ -70,6 +70,11 @@ namespace PhotoViewer
             Log.Info("MainWindow Loaded");
         }
 
+        private void MaxPageReachedHandler(object sender, EventArgs e)
+        {
+              NextPage.Visibility = Visibility.Collapsed;
+        }
+
         private void StackEmptyEventHanlder(object sender, EventArgs e)
         {
             BackButton.Visibility = Visibility.Collapsed;
@@ -96,7 +101,7 @@ namespace PhotoViewer
 
         private void OnBackButtonClicked(object sender, RoutedEventArgs e)
         {
-            var str = controller.BackButtonHandler();
+            var str = controller.QueryImagesOfPreviousPage();
             if (!string.IsNullOrWhiteSpace(str))
             {
                 SearchTextBox.Text = str;
@@ -105,7 +110,7 @@ namespace PhotoViewer
 
         private void OnNextButtonClicked(object sender, RoutedEventArgs e)
         {
-            controller.NextPageHandler();
+            controller.QueryImagesOfNextPage();
         }
 
         private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)

@@ -9,7 +9,7 @@ using ProductConfig;
 
 namespace PhotoViewer
 {
-    internal class CallsToJs : ICallsToJs
+    public class CallsToJs : ICallsToJs
     {
         IBrowser browser;
 

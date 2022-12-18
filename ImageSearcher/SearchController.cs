@@ -20,11 +20,11 @@ namespace PhotoViewer
         public int NoOfPages;
     }
 
-    internal class SearchController 
+    public class SearchController : ISearchController
     {
         IBrowser browser;
 
-        IImageSearcher imgSearcher;
+        IImageSearchService imgSearcher;
 
         ICallsToJs callsToJs;
 
@@ -38,12 +38,12 @@ namespace PhotoViewer
 
         public static EventHandler OnStackAdded;
 
-        public int GetStackCount()
+        public ConcurrentStack<Tuple<string, int>> GetSearchStack()
         {
-            return searchStack.Count;
+            return searchStack;
         }
 
-        public SearchController(IBrowser browser, IImageSearcher imgSearcher, ICallsToJs callsToJs) 
+        public SearchController(IBrowser browser, IImageSearchService imgSearcher, ICallsToJs callsToJs) 
         { 
             this.browser = browser;
             this.imgSearcher = imgSearcher;
@@ -51,7 +51,7 @@ namespace PhotoViewer
             searchStack = new ConcurrentStack<Tuple<string, int>>();
         }
 
-        public void QueryImages(string searchText, int pageNo = 1, bool newSearch = true)
+        public Task QueryImages(string searchText, int pageNo = 1, bool newSearch = true)
         {
             Log.Info($"Search Query - {searchText}");
             callsToJs.ShowLoading();
@@ -68,18 +68,19 @@ namespace PhotoViewer
 
             OnImagesResultsReceived += SearchResultsReceivedHandler;
 
-            Task.Run(() =>
+            Task t = Task.Run(() =>
             {
-                var result = imgSearcher.GetImagesUrl(searchText);
+                var result = imgSearcher.GetImagesForSearchString(searchText);
                 var args = new SearchButtonClickedEventArgs();
                 args.IsRequestSuccessful = result.IsRequestSuccessful;
                 args.imagesArray = result.imagesArray;
                 args.NoOfPages = result.ResponsePages;
-                OnImagesResultsReceived.Invoke(this, args);
+                OnImagesResultsReceived?.Invoke(this, args);
             });
+            return t;
         }
 
-        public string BackButtonHandler()
+        public string QueryImagesOfPreviousPage()
         {
             Tuple<string, int> deleteTuple, currentTuple;
             searchStack.TryPop(out deleteTuple);
@@ -91,12 +92,13 @@ namespace PhotoViewer
                 {
                     OnStackEmpty.Invoke(this, null);
                 }
+                return currentTuple.Item1;
             }
-            return currentTuple.Item1;
+            return string.Empty;
         }
 
 
-        public void NextPageHandler()
+        public void QueryImagesOfNextPage()
         {
             Tuple<string, int> tuple;
             if (searchStack.TryPeek(out tuple))

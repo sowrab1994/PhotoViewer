@@ -12,10 +12,10 @@ namespace ImageSearcher
         public int ResponsePages { get; set; }
 
     }
-    public interface IImageSearcher
+    public interface IImageSearchService
     {
         void SetApiKey(string key = "");
         void SetPage(int page);
-        SearchResponse GetImagesUrl(string text);
+        SearchResponse GetImagesForSearchString(string text);
     }
 }

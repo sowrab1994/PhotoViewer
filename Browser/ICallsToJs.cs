@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PhotoViewer
 {
-    internal interface ICallsToJs
+    public interface ICallsToJs
     {
         void LoadImages(ArrayList images);
 

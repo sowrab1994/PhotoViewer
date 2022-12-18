@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace ProductConfig
 {
     public class Config
     {
+        #region GenericConstants
         public static string webPageUrl = "https://workspace.test/index.html";
+        #endregion
 
         #region JSFunctions
         public static string LoadImages = "loadImages";
@@ -18,7 +21,13 @@ namespace ProductConfig
         public static string EmptyResults = "noSearchResultPage";
         #endregion
 
+        #region FlickerConstants
+        public static string apiKey = "c098ab4dc93e9a203a007ad613d1c414";
+        public static string urlPrefix = "https://www.flickr.com/services/rest/?";
+        public static string searchMethodName = "flickr.photos.search";
+        #endregion
 
+        #region HelperMethods
         public static string BuildJavacriptFunction(string methodName, object[] args)
         {
             var stringBuilder = new StringBuilder();
@@ -74,5 +83,31 @@ namespace ProductConfig
                    || value is double
                    || value is decimal;
         }
+
+        
+        public static string ReadRegValueString(string path, string name)
+        {
+            string value = string.Empty;
+            try
+            {
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(path))
+                {
+                    if (key != null)
+                    {
+                        Object o = key.GetValue(name);
+                        if (o != null)
+                        {
+                            value = o.ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            { 
+            }
+            return value;
+        }
+
+        #endregion
     }
 }

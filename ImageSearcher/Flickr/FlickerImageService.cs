@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using ProductConfig;
 
 namespace ImageSearcher
 {
-    public class FlickerImageService : IImageSearcher
+    public class FlickerImageService : IImageSearchService
     {
-        private string apiKey = "c098ab4dc93e9a203a007ad613d1c414";
-        private string urlPrefix = "https://www.flickr.com/services/rest/?";
-        private string methodName = "flickr.photos.search";
         private Dictionary<string, string> urlQueryDict  = new Dictionary<string, string>();
         HttpRequestService httpRequest;
         FlickerResponseProcessor processor;
@@ -36,16 +32,15 @@ namespace ImageSearcher
         }
 
        
-        public SearchResponse GetImagesUrl(string text)
+        public SearchResponse GetImagesForSearchString(string text)
         {
-            string url = urlPrefix + "method" + "=" + methodName;
+            string url = Config.urlPrefix + "method" + "=" + Config.searchMethodName;
             SearchResponse searchResponse = new SearchResponse();
             SetApiKey();
             SetText(text);
             FormUrl(ref url);
             Task<string> tsk = null;
             bool isRequestSuccessful = true;
-            MessageBox.Show(url);
             Task.Run(() =>
             {
                 tsk = httpRequest.GetHttpResponse(url);  
@@ -89,7 +84,7 @@ namespace ImageSearcher
         {
             if(String.IsNullOrEmpty(key))
             {
-                urlQueryDict["api_key"] = apiKey;
+                urlQueryDict["api_key"] = Config.apiKey;
             }
             else
             {
