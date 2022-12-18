@@ -35,7 +35,7 @@ namespace Browser.JavaScriptCalls
         public void ShowNoImages()
         {
             Log.Info("Showing No search results in the browser");
-            browser.InvokeScriptAsync(Config.EmptyResults,new Object[] { });
+            browser.InvokeScriptAsync(Config.LoadNoResultsPage,new Object[] { });
         }
 
         public void ShowNoInternet()

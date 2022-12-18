@@ -22,8 +22,6 @@ namespace ImageSearcher
     {
 
         #region Members
-        IBrowser browser;
-
         IImageSearchService imgSearcher;
 
         ICallsToJs callsToJs;
@@ -46,9 +44,8 @@ namespace ImageSearcher
 
         #region PublicMemberFunction
 
-        public SearchController(IBrowser browser, IImageSearchService imgSearcher, ICallsToJs callsToJs) 
+        public SearchController(IImageSearchService imgSearcher, ICallsToJs callsToJs) 
         { 
-            this.browser = browser;
             this.imgSearcher = imgSearcher;
             this.callsToJs = callsToJs;
             searchStack = new ConcurrentStack<Tuple<string, int>>();

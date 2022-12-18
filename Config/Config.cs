@@ -14,7 +14,7 @@ namespace ProductConfig
         public static string LoadImages = "loadImages";
         public static string LoadNoInternet = "noInternetPage";
         public static string LoadingPage= "loadingPage";
-        public static string EmptyResults = "noSearchResultPage";
+        public static string LoadNoResultsPage = "noSearchResultPage";
         #endregion
 
         #region FlickerConstants

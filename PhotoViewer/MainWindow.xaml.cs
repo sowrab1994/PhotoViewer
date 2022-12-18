@@ -35,7 +35,7 @@ namespace PhotoViewer
             browser = new BrowserFactory().GetBrowser();
             imgSearcher = new ImageServiceFactory().GetImageService();
             callToJs = new CallsToJs(browser);
-            controller = new SearchController(browser, imgSearcher, callToJs);
+            controller = new SearchController(imgSearcher, callToJs);
             WebPageLoader.Children.Add(browser.GetUIElement);
             browser.LoadWebPage(Config.webPageUrl);
         }

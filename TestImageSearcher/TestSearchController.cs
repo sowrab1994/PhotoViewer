@@ -15,7 +15,6 @@ namespace TestPhotoViewer
     {
         SearchController controller;
         Mock<ICallsToJs> callsToJs;
-        Mock<IBrowser> browser;
         Mock<IImageSearchService> imgSearcher;
         bool IsStackAddedEventHandlerCalled;
         bool IsStackEmptyEventHandlerCalled;
@@ -26,9 +25,8 @@ namespace TestPhotoViewer
         public void SetupTest()
         {
             callsToJs = new Mock<ICallsToJs>();
-            browser = new Mock<IBrowser>();
             imgSearcher= new Mock<IImageSearchService>();
-            controller = new SearchController(browser.Object, imgSearcher.Object, callsToJs.Object);
+            controller = new SearchController(imgSearcher.Object, callsToJs.Object);
             IsStackAddedEventHandlerCalled = false;
             IsStackEmptyEventHandlerCalled = false;
         }

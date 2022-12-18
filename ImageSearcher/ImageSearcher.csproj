@@ -50,7 +50,7 @@
     <Compile Include="Flickr\FlickerImageService.cs" />
     <Compile Include="Flickr\FlickerResponseProcessor.cs" />
     <Compile Include="Flickr\FlickerSearchResponse.cs" />
-    <Compile Include="HttpRequest\HttpClient.cs" />
+    <Compile Include="HttpRequest\HttpRequestService.cs" />
     <Compile Include="HttpRequest\IHttpRequestService.cs" />
     <Compile Include="ImageSearchService\IImageSearchService.cs" />
     <Compile Include="ImageSearchService\IImageServiceFactory.cs" />
