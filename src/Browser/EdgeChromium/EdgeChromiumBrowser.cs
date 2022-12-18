@@ -1,7 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using ProductConfig;
 
@@ -21,7 +20,7 @@ namespace Browser
             edgeWebView.Loaded += async (sender, e) =>
             {
                 await edgeWebView.EnsureCoreWebView2Async(null).ConfigureAwait(true);
-                string path = System.IO.Path.Combine(@"C:\PhotoViewer\ReactModule", "build");
+                string path = System.IO.Path.Combine(@"C:\PhotoViewer\src\ReactModule", "build");
                 edgeWebView.CoreWebView2.SetVirtualHostNameToFolderMapping("workspace.test", path,
                     CoreWebView2HostResourceAccessKind.Allow);
                 edgeWebView.CoreWebView2.Settings.AreDevToolsEnabled = false;

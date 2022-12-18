@@ -9,13 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearcher", "ImageSearc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{5F09ACCF-407A-440A-A1C7-409DAFF8E347}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestImageSearcher", "TestImageSearcher\TestImageSearcher.csproj", "{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.csproj", "{57966E44-41E4-46E1-A0B8-893F0B3C7303}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "Config\Config.csproj", "{29B615FD-B794-4245-94D0-0DA241B5D94F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserTest", "BrowserTest\BrowserTest.csproj", "{911A65F8-2653-41B7-8F61-D23CB6BC398C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserTest", "..\test\BrowserTest\BrowserTest.csproj", "{911A65F8-2653-41B7-8F61-D23CB6BC398C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestImageSearcher", "..\test\TestImageSearcher\TestImageSearcher.csproj", "{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,6 @@ Global
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED50A8DB-7CE6-4227-98DF-6D1DF817C20B}.Release|x86.Build.0 = Release|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|x86.Build.0 = Debug|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|x86.ActiveCfg = Release|Any CPU
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|x86.Build.0 = Release|Any CPU
 		{57966E44-41E4-46E1-A0B8-893F0B3C7303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57966E44-41E4-46E1-A0B8-893F0B3C7303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57966E44-41E4-46E1-A0B8-893F0B3C7303}.Debug|x86.ActiveCfg = Debug|Win32
@@ -73,13 +65,21 @@ Global
 		{911A65F8-2653-41B7-8F61-D23CB6BC398C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{911A65F8-2653-41B7-8F61-D23CB6BC398C}.Release|x86.ActiveCfg = Release|Any CPU
 		{911A65F8-2653-41B7-8F61-D23CB6BC398C}.Release|x86.Build.0 = Release|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B} = {5F09ACCF-407A-440A-A1C7-409DAFF8E347}
 		{911A65F8-2653-41B7-8F61-D23CB6BC398C} = {5F09ACCF-407A-440A-A1C7-409DAFF8E347}
+		{4260DE74-8D53-4CFE-BED7-7E7ECFA3DF8B} = {5F09ACCF-407A-440A-A1C7-409DAFF8E347}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1849C2DD-592C-4059-8BFC-A561A92A177C}
