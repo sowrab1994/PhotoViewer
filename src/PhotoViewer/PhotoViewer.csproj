@@ -121,4 +121,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetDir)\WebModule"  rmdir "$(TargetDir)\WebModule" /s /q
+xcopy "$(SolutionDir)\ReactModule\build" "$(TargetDir)\WebModules" /E /I /y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -19,13 +19,13 @@ namespace PhotoViewer
     {
         IBrowser browser;
 
-        IImageSearchService imgSearcher;
-
         private static ILog Log;
 
         ISearchController controller;
 
-        ICallsToJs callToJs;
+        private object backButtonlockobj = new object();
+        private object searcButtonlockobj = new object();
+
 
         public MainWindow()
         {
@@ -33,9 +33,8 @@ namespace PhotoViewer
             IntializeLogging();
             Loaded += MainWindow_Loaded;
             browser = new BrowserFactory().GetBrowser();
-            imgSearcher = new ImageServiceFactory().GetImageService();
-            callToJs = new CallsToJs(browser);
-            controller = new SearchController(imgSearcher, callToJs);
+            controller = new SearchController(new ImageServiceFactory().GetImageService()
+                , new CallsToJs(browser));
             WebPageLoader.Children.Add(browser.GetUIElement);
             browser.LoadWebPage(Config.webPageUrl);
         }
@@ -68,28 +67,35 @@ namespace PhotoViewer
             Log.Info("MainWindow Loaded");
         }
 
-        private void MaxPageReachedHandler(object sender, EventArgs e)
-        {
-              NextPage.Visibility = Visibility.Collapsed;
-        }
-
         private void StackEmptyEventHanlder(object sender, EventArgs e)
         {
             Log.Info("Disabling back button");
-            BackButton.Visibility = Visibility.Collapsed;
+            lock (backButtonlockobj)
+            {
+                BackButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void StackAddedEventHandler(object sender, EventArgs e)
         {
-            Log.Info("Enabling back button");
-            BackButton.Visibility = Visibility.Visible;
+            lock (backButtonlockobj)
+            {
+                Log.Info("Enabling back button");
+                if (BackButton.Visibility != Visibility.Visible)
+                {
+                    BackButton.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void TextBoxChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            SearchButton.IsEnabled = SearchTextBox.Text.Length > 0;
-            SearchButton.Foreground = SearchButton.IsEnabled ?
-                new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
+            lock (searcButtonlockobj)
+            {
+                SearchButton.IsEnabled = SearchTextBox.Text.Length > 0;
+                SearchButton.Foreground = SearchButton.IsEnabled ?
+                    new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
+            }
         }
 
         private void OnSearchButtonClicked(object sender, RoutedEventArgs e)
