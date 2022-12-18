@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using PhotoViewer;
+using Browser.JavaScriptCalls;
 using Browser;
 using ImageSearcher;
 using Moq;
@@ -37,7 +37,7 @@ namespace TestPhotoViewer
         public void TestQueryImagesForFirstTimeAndCheckStack()
         { 
             var searchResponse = new SearchResponse();
-            searchResponse.imagesArray = new ArrayList() { "testurl" };
+            searchResponse.ImagesArray = new ArrayList() { "testurl" };
             searchResponse.IsRequestSuccessful = true;
             searchResponse.ResponsePages = 1;
             imgSearcher.Setup(p => p.SetPage(1)).Verifiable();
@@ -60,7 +60,7 @@ namespace TestPhotoViewer
         public void TestQueryImagesWhenHttpRequestFails()
         {
             var searchResponse = new SearchResponse();
-            searchResponse.imagesArray = new ArrayList() {  };
+            searchResponse.ImagesArray = new ArrayList() {  };
             searchResponse.IsRequestSuccessful = false;
             searchResponse.ResponsePages = 0;
             imgSearcher.Setup(p => p.GetImagesForSearchString(It.IsAny<string>())).Returns(searchResponse);
@@ -78,7 +78,7 @@ namespace TestPhotoViewer
         public void TestQueryImagesWhenNoImagesAreReturned()
         {
             var searchResponse = new SearchResponse();
-            searchResponse.imagesArray = new ArrayList() { };
+            searchResponse.ImagesArray = new ArrayList() { };
             searchResponse.IsRequestSuccessful = true;
             searchResponse.ResponsePages = 0;
             imgSearcher.Setup(p => p.SetPage(1)).Verifiable();
@@ -96,7 +96,7 @@ namespace TestPhotoViewer
         public void TestEventHandlerWhenTwoQueriesAreMade()
         {
             var searchResponse = new SearchResponse();
-            searchResponse.imagesArray = new ArrayList() { "testurl" };
+            searchResponse.ImagesArray = new ArrayList() { "testurl" };
             searchResponse.IsRequestSuccessful = true;
             searchResponse.ResponsePages = 1;
             imgSearcher.Setup(p => p.SetPage(1)).Verifiable();
@@ -127,7 +127,7 @@ namespace TestPhotoViewer
         {
             SearchController.OnStackEmpty += StackEmptyEventHandler;
             var searchResponse = new SearchResponse();
-            searchResponse.imagesArray = new ArrayList() { "testurl" };
+            searchResponse.ImagesArray = new ArrayList() { "testurl" };
             searchResponse.IsRequestSuccessful = true;
             searchResponse.ResponsePages = 1;
             imgSearcher.Setup(p => p.SetPage(1)).Verifiable();
@@ -156,6 +156,7 @@ namespace TestPhotoViewer
 
             controller.QueryImagesOfPreviousPage();
             Assert.AreEqual(1, controller.GetSearchStack().Count);
+            Assert.IsTrue(IsStackEmptyEventHandlerCalled);
 
         }
 

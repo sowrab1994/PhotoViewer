@@ -1,15 +1,13 @@
 ﻿using Browser;
-using ImageSearcher;
 using log4net;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows;
+using Browser.JavaScriptCalls;
 
-namespace PhotoViewer
+namespace ImageSearcher
 {
     internal class SearchButtonClickedEventArgs : EventArgs
     {
@@ -22,6 +20,8 @@ namespace PhotoViewer
 
     public class SearchController : ISearchController
     {
+
+        #region Members
         IBrowser browser;
 
         IImageSearchService imgSearcher;
@@ -30,18 +30,21 @@ namespace PhotoViewer
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private EventHandler<SearchButtonClickedEventArgs> OnImagesResultsReceived;
-
         private ConcurrentStack<Tuple<string, int>> searchStack;
+
+        #endregion
+
+        #region EventHandler
+
+        private EventHandler<SearchButtonClickedEventArgs> OnImagesResultsReceived;
 
         public static EventHandler OnStackEmpty;
 
         public static EventHandler OnStackAdded;
 
-        public ConcurrentStack<Tuple<string, int>> GetSearchStack()
-        {
-            return searchStack;
-        }
+        #endregion
+
+        #region PublicMemberFunction
 
         public SearchController(IBrowser browser, IImageSearchService imgSearcher, ICallsToJs callsToJs) 
         { 
@@ -53,13 +56,14 @@ namespace PhotoViewer
 
         public Task QueryImages(string searchText, int pageNo = 1, bool newSearch = true)
         {
-            Log.Info($"Search Query - {searchText}");
+            Log.Info($"Search Query - {searchText}, Page No - {pageNo}");
             callsToJs.ShowLoading();
                 
             imgSearcher.SetPage(pageNo);
             
             if(newSearch) {
-                searchStack.Push(new Tuple<string, int>(searchText, pageNo));
+               Log.Info("Query Initiated from Search Box, pushing to stack");
+               searchStack.Push(new Tuple<string, int>(searchText, pageNo));
             }
 
             if (searchStack.Count > 1) {
@@ -73,7 +77,7 @@ namespace PhotoViewer
                 var result = imgSearcher.GetImagesForSearchString(searchText);
                 var args = new SearchButtonClickedEventArgs();
                 args.IsRequestSuccessful = result.IsRequestSuccessful;
-                args.imagesArray = result.imagesArray;
+                args.imagesArray = result.ImagesArray;
                 args.NoOfPages = result.ResponsePages;
                 OnImagesResultsReceived?.Invoke(this, args);
             });
@@ -82,6 +86,7 @@ namespace PhotoViewer
 
         public string QueryImagesOfPreviousPage()
         {
+            Log.Info("Querying images of previous page");
             Tuple<string, int> deleteTuple, currentTuple;
             searchStack.TryPop(out deleteTuple);
 
@@ -100,12 +105,22 @@ namespace PhotoViewer
 
         public void QueryImagesOfNextPage()
         {
+            Log.Info("Querying images of next page");
             Tuple<string, int> tuple;
             if (searchStack.TryPeek(out tuple))
             {
                 QueryImages(tuple.Item1, tuple.Item2 + 1);
             }
         }
+
+        public ConcurrentStack<Tuple<string, int>> GetSearchStack()
+        {
+            return searchStack;
+        }
+
+        #endregion
+
+        #region privateMethods
 
         private void SearchResultsReceivedHandler(object sender, SearchButtonClickedEventArgs args)
         {
@@ -126,6 +141,7 @@ namespace PhotoViewer
                 callsToJs.ShowNoInternet();
             }
         }
+        #endregion
 
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace ImageSearcher
+// Class Representing XML response of Flickr API. Used for serialization
+
+namespace ImageSearcher.Flicker
 {
 	[XmlRoot(ElementName = "photo")]
 	public class Photo

@@ -1,13 +1,16 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 
-namespace ImageSearcher
+namespace ImageSearcher.HttpRequest
 {
-    public class HttpRequestService 
+    public class HttpRequestService : IHttpRequestService
     {
         private readonly HttpClient client;
         private static object lockObj = new object();
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private static HttpRequestService httpRequestSrv;
 
@@ -35,6 +38,7 @@ namespace ImageSearcher
             var response = string.Empty;
             try
             {
+                Log.Info($"Makeing http request with the {url}");
                 HttpResponseMessage result = await client.GetAsync(url);
                 if (result.IsSuccessStatusCode)
                 {

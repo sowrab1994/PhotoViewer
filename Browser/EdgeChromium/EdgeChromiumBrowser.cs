@@ -10,8 +10,6 @@ namespace Browser
     public class EdgeChromiumBrowser : IBrowser
     {
         private WebView2 edgeWebView;
-        //https://workspace.test/index.html
-        private CoreWebView2Environment webView2Environment;
         bool IsEdgeBrowserReady { get; set; }
 
         event EventHandler EdgeBrowserReadyEvent;
@@ -22,7 +20,7 @@ namespace Browser
 
             edgeWebView.Loaded += async (sender, e) =>
             {
-                await edgeWebView.EnsureCoreWebView2Async(webView2Environment).ConfigureAwait(true);
+                await edgeWebView.EnsureCoreWebView2Async(null).ConfigureAwait(true);
                 string path = System.IO.Path.Combine(@"C:\PhotoViewer", "Webpage");
                 edgeWebView.CoreWebView2.SetVirtualHostNameToFolderMapping("workspace.test", path,
                     CoreWebView2HostResourceAccessKind.Allow);
@@ -34,15 +32,8 @@ namespace Browser
                 EdgeBrowserReadyEvent?.Invoke(this, EventArgs.Empty);
             };
         }
-        public async Task InitEnvironmentAsync()
-        {
-            var environmentOption = new CoreWebView2EnvironmentOptions();
 
-            webView2Environment = await CoreWebView2Environment.CreateAsync(null,
-                @"", environmentOption).ConfigureAwait(true);
-        }
-
-
+        #region PublicMemberFunction
         public void LoadWebPage(string webPage)
         {
             this.edgeWebView.Dispatcher.Invoke(() =>
@@ -71,5 +62,6 @@ namespace Browser
                 edgeWebView.ExecuteScriptAsync(test);
             });
         }
+        #endregion
     }
 }

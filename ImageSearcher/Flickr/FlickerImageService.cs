@@ -3,21 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProductConfig;
+using ImageSearcher.HttpRequest;
 
-namespace ImageSearcher
+namespace ImageSearcher.Flicker
 {
     public class FlickerImageService : IImageSearchService
     {
         private Dictionary<string, string> urlQueryDict  = new Dictionary<string, string>();
-        HttpRequestService httpRequest;
+        IHttpRequestService httpRequest;
         FlickerResponseProcessor processor;
 
-        public FlickerImageService() 
+        public FlickerImageService(IHttpRequestService httpRequestService) 
         {
-            httpRequest = HttpRequestService.GetInstance();
+            httpRequest = httpRequestService;
             processor = new FlickerResponseProcessor();
         }
 
+        #region PrivateMethods
         private string MergeKeyValue(string key, string val)
         {
             return "&" + key + "=" + val;
@@ -31,7 +33,9 @@ namespace ImageSearcher
             }
         }
 
-       
+        #endregion
+
+        #region PublicMemberFunction
         public SearchResponse GetImagesForSearchString(string text)
         {
             string url = Config.urlPrefix + "method" + "=" + Config.searchMethodName;
@@ -61,9 +65,11 @@ namespace ImageSearcher
             {
                 try
                 {
-                    processor.SerializeResponse(responseString);
-                    searchResponse.imagesArray = processor.GetImagesUrl();
-                    searchResponse.ResponsePages = processor.GetResponsePages();
+                    if (processor.SerializeResponse(responseString))
+                    {
+                        searchResponse.ImagesArray = processor.GetImagesUrl();
+                        searchResponse.ResponsePages = processor.GetResponsePages();
+                    }
                 }
                 catch
                 {
@@ -96,5 +102,6 @@ namespace ImageSearcher
         {
             urlQueryDict["page"] = page.ToString();
         }
+        #endregion
     }
 }

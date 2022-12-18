@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ImageSearcher
+namespace ImageSearcher.Flicker
 {
     public class FlickerResponseProcessor
     {
@@ -38,13 +38,13 @@ namespace ImageSearcher
 
         public int GetResponsePages()
         {
-            return rspObj.Photos.Pages;
+            return rspObj?.Photos?.Pages?? 0;
         }
 
         public ArrayList GetImagesUrl()
         {
             ArrayList imgList = new ArrayList();
-            foreach(var photo in rspObj.Photos.Photo)
+            foreach(var photo in rspObj?.Photos?.Photo)
             {
                 imgList.Add(FormImageUrl(photo));
             }

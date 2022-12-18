@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using ProductConfig;
+﻿using ProductConfig;
+using ImageSearcher.HttpRequest;
+using ImageSearcher.Flicker;
 
-namespace ImageSearcher
+namespace ImageSearcher.ImageSearchService
 {
     public class ImageServiceFactory : IImageServiceFactory
     {
@@ -17,9 +13,9 @@ namespace ImageSearcher
             switch(service.ToLower())
             {
                 case "flickr":
-                    return new FlickerImageService();
+                    return new FlickerImageService(HttpRequestService.GetInstance());
                 default:
-                    return new FlickerImageService();
+                    return new FlickerImageService(HttpRequestService.GetInstance());
             }
         }
     }

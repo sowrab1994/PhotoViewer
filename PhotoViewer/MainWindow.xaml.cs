@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Browser;
 using ImageSearcher;
 using log4net;
 using ProductConfig;
+using Browser.JavaScriptCalls;
+using ImageSearcher.ImageSearchService;
 
 namespace PhotoViewer
 {
-
-   
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -77,11 +75,13 @@ namespace PhotoViewer
 
         private void StackEmptyEventHanlder(object sender, EventArgs e)
         {
+            Log.Info("Disabling back button");
             BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void StackAddedEventHandler(object sender, EventArgs e)
         {
+            Log.Info("Enabling back button");
             BackButton.Visibility = Visibility.Visible;
         }
 

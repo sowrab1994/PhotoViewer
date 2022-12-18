@@ -50,13 +50,14 @@
     <Compile Include="Flickr\FlickerImageService.cs" />
     <Compile Include="Flickr\FlickerResponseProcessor.cs" />
     <Compile Include="Flickr\FlickerSearchResponse.cs" />
-    <Compile Include="HttpClient.cs" />
-    <Compile Include="IImageSearchService.cs" />
-    <Compile Include="IImageServiceFactory.cs" />
-    <Compile Include="ImageServiceFactory.cs" />
-    <Compile Include="ISearchController.cs" />
+    <Compile Include="HttpRequest\HttpClient.cs" />
+    <Compile Include="HttpRequest\IHttpRequestService.cs" />
+    <Compile Include="ImageSearchService\IImageSearchService.cs" />
+    <Compile Include="ImageSearchService\IImageServiceFactory.cs" />
+    <Compile Include="ImageSearchService\ImageServiceFactory.cs" />
+    <Compile Include="SearchController\ISearchController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchController.cs" />
+    <Compile Include="SearchController\SearchController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
