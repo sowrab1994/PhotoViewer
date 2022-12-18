@@ -21,6 +21,8 @@ namespace ProductConfig
         public static string apiKey = "c098ab4dc93e9a203a007ad613d1c414";
         public static string urlPrefix = "https://www.flickr.com/services/rest/?";
         public static string searchMethodName = "flickr.photos.search";
+        public static string imageUrlPrefix = "https://live.staticflickr.com/";
+
         #endregion
 
         #region HelperMethods

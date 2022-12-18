@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ProductConfig;
 
 namespace ImageSearcher.Flicker
 {
     public class FlickerResponseProcessor
     {
-        private string imageUrlPrefix = "https://live.staticflickr.com/";
         Rsp rspObj;
 
         private string FormImageUrl(Photo photoObj)
         {
-            return imageUrlPrefix + photoObj.Server + "/" + photoObj.Id + "_" + photoObj.Secret + ".jpg";
+            return Config.imageUrlPrefix + photoObj.Server + "/" + photoObj.Id + "_" + photoObj.Secret + ".jpg";
         }
 
+        /// <summary>
+        ///     Serializes the XML response to a class
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
         public bool SerializeResponse(string response)
         {
             try
@@ -36,11 +37,19 @@ namespace ImageSearcher.Flicker
             }
         }
 
+        /// <summary>
+        ///     Gets total number of page results
+        /// </summary>
+        /// <returns></returns>
         public int GetResponsePages()
         {
             return rspObj?.Photos?.Pages?? 0;
         }
 
+        /// <summary>
+        ///      Gets the ArrayList of Images based on XML response
+        /// </summary>
+        /// <returns></returns>
         public ArrayList GetImagesUrl()
         {
             ArrayList imgList = new ArrayList();
