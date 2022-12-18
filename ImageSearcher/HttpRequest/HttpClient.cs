@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ImageSearcher
+namespace ImageSearcher.HttpRequest
 {
-    public class HttpRequestService 
+    public class HttpRequestService : IHttpRequestService
     {
         private readonly HttpClient client;
         private static object lockObj = new object();
