@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="3A6BF1E4-2BDF-4B15-B07E-6ED102CCCD9D" Name="PhotoViewer" Language="1033" Version="1.0.0.0" 
+			 Manufacturer="Test Corporation" UpgradeCode="c171e658-cba8-449d-8e5f-fc4797955195">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="PhotoViewer" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="WebModulesComponents" />
+			<ComponentGroupRef Id="WebModulesCSSComponents" />
+			<ComponentGroupRef Id="WebModulesJSComponents" />
+			<ComponentGroupRef Id="WebModulesMediaComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="PhotoViewer">
+					<Directory Id="WEBMODULESDIR" Name="WebModules">
+						<Directory Id="WEBMODULESDIRSTATIC" Name="static">
+							<Directory Id="WEBMODULESDIRSTATICCSS" Name="css"></Directory>
+							<Directory Id="WEBMODULESDIRSTATICJS" Name="js"></Directory>
+							<Directory Id="WEBMODULESDIRSTATICMEDIA" Name="media"></Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="cmp627F3B6FB01E21817D33DEFFCB494833" Guid="{0EBBC931-63A8-4357-98C5-C73D56FC9275}">
+				<File Id="filE773DCF7C4513E428F0E49536C6FFB82" KeyPath="yes" Source="$(var.SourceDir)\Browser.dll" />
+			</Component>
+			<Component Id="cmpC6040B4895A22DF974281BE1322E3E49" Guid="{6767D54E-826F-4343-8EBE-6E3AD3AA16D2}">
+				<File Id="fil1BBE8EFC792486D775E9C00AF4AAFCF3" KeyPath="yes" Source="$(var.SourceDir)\Config.dll" />
+			</Component>
+			<Component Id="cmpD3A49B8604D522C5837A0FBBD206E5EC" Guid="{1937380B-4681-4AB5-9128-6A5AD6E6AA49}">
+				<File Id="fil34E3C28AEFC35BFCE328EBAA9781DDA3" KeyPath="yes" Source="$(var.SourceDir)\ImageSearcher.dll" />
+			</Component>
+			<Component Id="cmp75C51DF10C0B5BDF2822D9EEEF27813C" Guid="{1B262EE2-73C3-4629-9C6E-A55B23AC50D1}">
+				<File Id="fil4418F00EA37EF62D28148E7E7B42BC40" KeyPath="yes" Source="$(var.SourceDir)\log4net.dll" />
+			</Component>
+			<Component Id="cmp206CF24FB52772BB778A030551BAF8CB" Guid="{D8B92DBA-6FA5-4773-B0CD-DF9DAC3E1B81}">
+				<File Id="fil0DE18A91CE51903CC2BBC73222B57AC4" KeyPath="yes" Source="$(var.SourceDir)\log4net.xml" />
+			</Component>
+			<Component Id="cmp2CACCDB386418FEC79FF714F70603179" Guid="{E5ACE5E2-1ADE-494C-B050-252BC7B96AE1}">
+				<File Id="filF0720258D07C8E4D34CF11C0B9527DF3" KeyPath="yes" Source="$(var.SourceDir)\Microsoft.Web.WebView2.Core.dll" />
+			</Component>
+			<Component Id="cmp60B1AAEB01012CA124980B77DF400950" Guid="{1D9703DE-D084-4271-97A3-F7BEFFC6A855}">
+				<File Id="filE8EEE4549014F0718C171AC3DB32186A" KeyPath="yes" Source="$(var.SourceDir)\Microsoft.Web.WebView2.Core.xml" />
+			</Component>
+			<Component Id="cmpF98CA7DBDD7DC2D680B0CDF4D3A16C60" Guid="{F2EDC0EF-2477-4BB2-80DA-4A6C2753D0C4}">
+				<File Id="fil76C5CE898FB686EB79CBDE1CE0FCEA05" KeyPath="yes" Source="$(var.SourceDir)\Microsoft.Web.WebView2.Wpf.dll" />
+			</Component>
+			<Component Id="cmpC74646CFC4207358EF338D43DBEB242A" Guid="{49D5EA98-E673-4C2F-8565-011D746CA842}">
+				<File Id="fil742C8D0190A66FB2E7D52BB64DBCD06E" KeyPath="yes" Source="$(var.SourceDir)\Microsoft.Web.WebView2.Wpf.xml" />
+			</Component>
+			<Component Id="cmp4793EE9838A4B326E96471F9E100831E" Guid="{E719DBB8-0275-48B6-8B8D-BA133A1E55B6}">
+				<File Id="fil8B5ED7C9291400B67CB7A20273FB1CA7" KeyPath="yes" Source="$(var.SourceDir)\PhotoViewer.config" />
+			</Component>
+			<Component Id="cmp40F76A9364153B54D8EE7BF14A541F5E" Guid="{B429778C-6404-4BC2-B276-E4A8910D6CC8}">
+				<File Id="fil5854AF154C236B1270D7EE4C0023576B" KeyPath="yes" Source="$(var.SourceDir)\PhotoViewer.exe" />
+			</Component>
+			<Component Id="cmp27C1E11C790E1EDD195C4750C44AECB0" Guid="{29CA309C-37A2-4B31-B6F4-B29708089961}">
+				<File Id="fil596350634E8AB57002BC587E16F83321" KeyPath="yes" Source="$(var.SourceDir)\PhotoViewer.exe.config" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="WebModulesComponents" Directory="WEBMODULESDIR">
+			<Component Id="cmp63371C562447E89030A0ACC57F0FABE9" Guid="{F520CCE6-BA19-4291-AF0F-C520DDCB2A57}">
+				<File Id="fil100992641A01A442C1A98AC846E31C3F" KeyPath="yes" Source="$(var.SourceDir)\WebModules\asset-manifest.json" />
+			</Component>
+			<Component Id="cmp4C857BAE110ECB3A9A7CF8B4E991F0BD" Guid="{BE4D14A2-1E54-4267-B994-F7FFBCE6BC01}">
+				<File Id="fil5AB50A4C98B9E2E5C83F901297285443" KeyPath="yes" Source="$(var.SourceDir)\WebModules\favicon.ico" />
+			</Component>
+			<Component Id="cmpC2E1546127A80DB4F34A087FAB0F7B03" Guid="{2D518CF4-C0FA-4504-B23A-86112962A64D}">
+				<File Id="fil12BE45941B21A0AED8AE4D238E1D978E" KeyPath="yes" Source="$(var.SourceDir)\WebModules\index.html" />
+			</Component>
+			<Component Id="cmp4AFCF8E0D7C7012AEF70065A4C36D8CA" Guid="{E49EFB5C-BB06-4253-986B-1A594C59A39F}">
+				<File Id="fil154F700A9AE34A5783496B5CCB19C883" KeyPath="yes" Source="$(var.SourceDir)\WebModules\logo192.png" />
+			</Component>
+			<Component Id="cmpEE8386F0987B05BE22B9E44CD9C318D8" Guid="{E0391492-E30E-4B70-8A2D-5EE30A824ADF}">
+				<File Id="filB28508A4ECC009095D6D3144F54A5D4B" KeyPath="yes" Source="$(var.SourceDir)\WebModules\logo512.png" />
+			</Component>
+			<Component Id="cmpE5409DBF5A2992377D5EA6330296DE73" Guid="{FDA0EA28-1624-4338-9F05-17357CA900D8}">
+				<File Id="fil5A9B1C9A9E1EA50D791D793EA2D2F765" KeyPath="yes" Source="$(var.SourceDir)\WebModules\manifest.json" />
+			</Component>
+			<Component Id="cmp0BC9AD8FA888FD7E296CAB467EE5D331" Guid="{D653119E-9BFF-414E-BF8B-512D8E74252D}">
+				<File Id="fil813E719CD2D28D3185F736703822804C" KeyPath="yes" Source="$(var.SourceDir)\WebModules\robots.txt" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="WebModulesCSSComponents" Directory="WEBMODULESDIRSTATICCSS">
+			<Component Id="cmpD2DCB986B584E41D30391C5F41DFF3FC" Guid="{1879090C-35C0-4F0F-99F4-33BB4977DD1D}">
+				<File Id="fil6BFEC0C8D53F1C0FF75C6FB4DDF69CB3" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\css\main.6d32072f.css" />
+			</Component>
+			<Component Id="cmp5C3E3A8161E96FE57E2F06BAD2CF6A8D" Guid="{C06F5B6B-AD8F-4004-B475-F7BB570B7216}">
+				<File Id="filAF2EC1BD1C5DC318433163962C9828E2" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\css\main.6d32072f.css.map" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="WebModulesJSComponents" Directory="WEBMODULESDIRSTATICJS">
+			<Component Id="cmp953539557E23951147E7B686426DC9DE" Guid="{44F32AD8-6D68-4CC8-830B-050A769322EC}">
+				<File Id="filDA0BC9648F86581E1E6641827D476434" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\js\787.d7e7aaf3.chunk.js" />
+			</Component>
+			<Component Id="cmp983505D9FAB618DDE6FB583AA99E52D5" Guid="{475B690E-50C9-4308-9A11-87900376DE11}">
+				<File Id="filB895C29F80FBDFE4CC1E64291AD328BB" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\js\787.d7e7aaf3.chunk.js.map" />
+			</Component>
+			<Component Id="cmpFCADE08B2B92E2214F03E3DD826D4EAA" Guid="{BCDEBE71-8CEB-49F0-9B5D-417D3475E9A5}">
+				<File Id="filC56D0B81AA4AB1872D4CC186F531BB46" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\js\main.1c066c45.js" />
+			</Component>
+			<Component Id="cmpF25021B2DE4F6429487D587C55686E81" Guid="{E4300995-87BB-4820-BB3F-FA375CD22D52}">
+				<File Id="fil631B54B16F7FC82C3EB70EC581E13844" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\js\main.1c066c45.js.LICENSE.txt" />
+			</Component>
+			<Component Id="cmp0918F9FB55F7DF85BDC7C29AF112CB78" Guid="{2B1093A3-1D3B-4F17-9F3D-D932151AE55A}">
+				<File Id="fil75BEA60F46B5CC786E7C0D6AD1F0DE04" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\js\main.1c066c45.js.map" />
+			</Component>
+		</ComponentGroup>
+		<ComponentGroup Id="WebModulesMediaComponents" Directory="WEBMODULESDIRSTATICMEDIA">
+			<Component Id="cmpB0D747D28450249CE9E4F7EAB68F5D7E" Guid="{611387E6-6257-4A7D-8EE9-763EEF53D6EE}">
+				<File Id="filDB12BC86A619669BBB6208A01024110C" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\media\home.ad647cf9dd6bce374f48.jpg" />
+			</Component>
+			<Component Id="cmp709AC0E40F1C48489D543C13EC828CE2" Guid="{BD63C8F8-83A1-498A-A47C-D02CAEB84C88}">
+				<File Id="fil1891E5752DB1CC27D50FC1B939A17D6A" KeyPath="yes" Source="$(var.SourceDir)\WebModules\static\media\spinner.6de1abe6b9fbf3997888.gif" />
+			</Component>
+		</ComponentGroup>
+</Fragment>
+</Wix>

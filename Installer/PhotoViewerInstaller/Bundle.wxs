@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Bundle Name="PhotoViewerInstaller" Version="1.0.0.0" Manufacturer="Test Corporation" UpgradeCode="bec6d860-ffac-41da-a4cb-a3b21217d4fa">
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+
+		<Chain>
+			<MsiPackage SourceFile="..\PhotoViewerMSIInstaller\bin\$(var.Configuration)\PhotoViewerMSIInstaller.msi" />
+		</Chain>
+	</Bundle>
+</Wix>
