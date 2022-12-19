@@ -50,6 +50,9 @@ Please follow below steps to build the project
 
 ![image](https://user-images.githubusercontent.com/8791528/208348235-1ca8300f-831f-4f1e-be5a-401981dc6dd0.png)
 
+## Demo
+
+![demo](https://user-images.githubusercontent.com/8791528/208362960-d4f98f47-ce7b-47ec-9db7-25943d4ab11b.gif)
 
 ## What's Next
 
