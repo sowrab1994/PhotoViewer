@@ -12,15 +12,16 @@
     <Border Background="#272537">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"></RowDefinition>
-                <RowDefinition Height="631"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="75*"></RowDefinition>
+                <RowDefinition Height="631*"></RowDefinition>
+                <RowDefinition Height="75*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <TextBox Name ="SearchTextBox"  
                      FontSize="20" 
                      TextWrapping="Wrap" 
-                     VerticalContentAlignment="Center" 
+                     VerticalContentAlignment="Stretch" 
+                     HorizontalAlignment="Stretch"
                      Margin="151,22,641,23" 
                      TextChanged="TextBoxChanged"
                      BorderThickness="0"
@@ -28,12 +29,12 @@
                      Foreground="White" KeyDown="OnKeyDownHandler"
                         
                     />
-            <Button Name ="SearchButton" Grid.Row="0" Content="Search" Click="OnSearchButtonClicked" Margin="616,24,516,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White"/>
-            <Button x:Name ="BackButton"   Grid.Row="0" Content="Back"  Margin="61,24,1074,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White" Click="OnBackButtonClicked"/>
+            <Button Name ="SearchButton" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="0" Content="Search" Click="OnSearchButtonClicked" Margin="616,24,516,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White"/>
+            <Button x:Name ="BackButton" HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Row="0" Content="Back"  Margin="61,24,1074,25" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White" Click="OnBackButtonClicked"/>
             <Grid x:Name="WebPageLoader" Grid.Row="1">
 
             </Grid>
-            <Button Grid.Row="2"  x:Name ="NextPage" Content="Next Page>>" Click="OnNextButtonClicked" Margin="1043,10,44,28" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White"/>
+            <Button Grid.Row="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  x:Name ="NextPage" Content="Next Page>>" Click="OnNextButtonClicked" Margin="1043,10,44,28" RenderTransformOrigin="0.474,-4.22" Background="#FF647EAC" FontSize="14" FontFamily="Bahnschrift" Foreground="White"/>
         </Grid>
     </Border>
 
