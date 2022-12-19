@@ -24,7 +24,7 @@
                      Margin="151,22,641,23" 
                      TextChanged="TextBoxChanged"
                      BorderThickness="0"
-                     Background="Gray"
+                     Background="#FF71A2A1"
                      Foreground="White" KeyDown="OnKeyDownHandler"
                         
                     />
